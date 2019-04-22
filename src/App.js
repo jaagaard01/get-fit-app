@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Link} from 'react-router-dom'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
 
+import BodyType from './components/BodyType'
+import Log from "./components/Log.js"
+import Home from "./components/Home.js"
+import Template from "./components/Template.js"
+import NavBar from "./components/NavBar"
+
+const client = new ApolloClient ({
+  uri: 'localhost:4000'
+})
 class App extends Component {
   render() {
     return (
+      <ApolloProvider client={client}>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    <NavBar></NavBar>
+      <BrowserRouter>
+          <Route exact path="/" component={Home} />
+          <Route path="/BodyType" component={BodyType} />
+          <Route path="/Logs" component={Log} />
+          <Route path="/Template" component={Template} />
+          </BrowserRouter>
       </div>
+      </ApolloProvider>
     );
   }
 }
